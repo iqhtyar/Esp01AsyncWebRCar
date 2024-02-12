@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remote Control RC</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    .button {
+      display: inline-block;
+      margin: 13px;
+      padding: 10px 20px;
+      font-size: 15px;
+      cursor: pointer;
+      border-radius: 5px;
+      background-color: #3498db;
+      color: white;
+      text-decoration: none;
+    }
+    .button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <h1>Remote Control RC</h1>
+  <div>
+    <button class="button" onclick="sendCommand('forward')">Maju</button>
+  </div>
+  <div>
+    <button class="button" onclick="sendCommand('left')">Kiri</button>
+    <button class="button" onclick="sendCommand('stop')">Stop</button>
+    <button class="button" onclick="sendCommand('right')">Kanan</button>
+  </div>
+  <div>
+    <button class="button" onclick="sendCommand('reverse')">Mundur</button>
+  </div>
+
+  <script>
+    function sendCommand(command) {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          console.log("Command sent: " + command);
+        }
+      };
+      xhttp.open("POST", "http://192.168.4.1:80/motor", true);
+      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhttp.send("command=" + command);
+    }
+  </script>
+</body>
+</html>
