@@ -4,14 +4,14 @@
 
 const char* ssid = "iqhtyar";
 const char* password = "12345678";
-IPAddress ip(192, 168, 43, 2);
-IPAddress netmask(255, 255, 255, 0);
+IPAddress ip(192, 168, 43, 129);
+IPAddress netmask(255, 255. 255, 0);
 const int port = 5038; // and this port 9876
 
 const int motorPin1 = 0;
-const int motorPin2 = 1;
+const int motorPin2 = 3;
 const int motorPin3 = 2;
-const int motorPin4 = 3;
+const int motorPin4 = 1;
 
 AsyncWebServer server(80);
 
@@ -79,7 +79,7 @@ const char index_html[] PROGMEM = R"rawliteral(
 )rawliteral";
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(57600);
   pinMode(motorPin1, OUTPUT);
   pinMode(motorPin2, OUTPUT);
   pinMode(motorPin3, OUTPUT);
@@ -91,7 +91,7 @@ void setup() {
   Serial.print("Connecting to ");
   Serial.println(ssid);
   while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
+    delay(500);
     Serial.print(".");
     if(WiFi.status() == WL_CONNECT_FAILED) {
       Serial.println("Connection Failed!");
@@ -115,26 +115,31 @@ void setup() {
       digitalWrite(motorPin2, LOW);
       digitalWrite(motorPin3, LOW);
       digitalWrite(motorPin4, LOW);
+      delay(10);
     } else if (command.equals("reverse")) {
       digitalWrite(motorPin1, LOW);
       digitalWrite(motorPin2, HIGH);
       digitalWrite(motorPin3, LOW);
       digitalWrite(motorPin4, LOW);
+      delay(10);
     } else if (command.equals("left")) {
       digitalWrite(motorPin1, HIGH);
       digitalWrite(motorPin2, LOW);
       digitalWrite(motorPin3, HIGH);
       digitalWrite(motorPin4, LOW);
+      delay(10);
     } else if (command.equals("right")) {
       digitalWrite(motorPin1, HIGH);
       digitalWrite(motorPin2, LOW);
       digitalWrite(motorPin3, LOW);
       digitalWrite(motorPin4, HIGH);
+      delay(10);
     } else if (command.equals("stop")) {
       digitalWrite(motorPin1, LOW);
       digitalWrite(motorPin2, LOW);
       digitalWrite(motorPin3, LOW);
       digitalWrite(motorPin4, LOW);
+      delay(10);
     }
 
     request->send(200, "text/plain", "Motor diatur: " + command);
